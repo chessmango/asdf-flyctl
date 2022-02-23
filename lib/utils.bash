@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-GH_REPO="https://github.com/jckuester/awsls"
-TOOL_NAME="awsls"
-TOOL_TEST="awsls --version"
+GH_REPO="https://github.com/hetznercloud/cli"
+TOOL_NAME="hcloud"
+TOOL_TEST="hcloud version"
 
 fail() {
   echo -e "asdf-$TOOL_NAME: $*"
@@ -13,7 +13,7 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if awsls is not hosted on GitHub releases.
+# NOTE: You might want to remove this if hcloud is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
   curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -38,7 +38,7 @@ download_release() {
   version="$1"
   filename="$2"
 
-  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}_${version}_$(get_platform)_$(get_arch).tar.gz"
+  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}-$(get_platform)-$(get_arch).$(get_ext)"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -70,7 +70,13 @@ install_version() {
 }
 
 get_platform() {
-  uname -s | tr '[:upper:]' '[:lower:]'
+  local platform
+  platform=$(uname -s | tr '[:upper:]' '[:lower:]')
+  if [ "$platform" = "darwin" ]; then
+    echo "macos"
+  else
+    echo "$platform"
+  fi
 }
 
 get_arch() {
@@ -85,6 +91,40 @@ get_arch() {
     ;;
   "aarch64" | "arm64")
     echo "arm64"
+    ;;
+  *)
+    exit 1
+    ;;
+  esac
+}
+
+get_ext() {
+  local platform
+  platform=$(uname -s | tr '[:upper:]' '[:lower:]')
+  case $platform in
+  "linux")
+    echo "tar.gz"
+    ;;
+  "darwin")
+    echo "zip"
+    ;;
+  *)
+    exit 1
+    ;;
+  esac
+}
+
+extract() {
+  local file download_path ext
+  file="$1"
+  download_path="$2"
+  ext="$(get_ext)"
+  case $ext in
+  "tar.gz")
+    tar -xzf "$file" -C "$download_path"
+    ;;
+  "zip")
+    unzip "$file" -d "$download_path"
     ;;
   *)
     exit 1
