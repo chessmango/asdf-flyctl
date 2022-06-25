@@ -1,9 +1,9 @@
 <div align="center">
 
-# asdf-hcloud [![Build](https://github.com/chessmango/asdf-hcloud/actions/workflows/build.yml/badge.svg)](https://github.com/chessmango/asdf-hcloud/actions/workflows/build.yml) [![Lint](https://github.com/chessmango/asdf-hcloud/actions/workflows/lint.yml/badge.svg)](https://github.com/chessmango/asdf-hcloud/actions/workflows/lint.yml)
+# asdf-flyctl [![Build](https://github.com/chessmango/asdf-flyctl/actions/workflows/build.yml/badge.svg)](https://github.com/chessmango/asdf-flyctl/actions/workflows/build.yml) [![Lint](https://github.com/chessmango/asdf-flyctl/actions/workflows/lint.yml/badge.svg)](https://github.com/chessmango/asdf-flyctl/actions/workflows/lint.yml)
 
 
-[hcloud](https://github.com/hetznercloud/cli) plugin for the [asdf version manager](https://asdf-vm.com).
+[flyctl](https://github.com/superfly/flyctl) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
@@ -24,23 +24,23 @@
 Plugin:
 
 ```shell
-asdf plugin add hcloud https://github.com/chessmango/asdf-hcloud.git
+asdf plugin add flyctl https://github.com/chessmango/asdf-flyctl.git
 ```
 
-hcloud:
+flyctl:
 
 ```shell
 # Show all installable versions
-asdf list-all hcloud
+asdf list-all flyctl
 
 # Install specific version
-asdf install hcloud latest
+asdf install flyctl latest
 
 # Set a version globally (on your ~/.tool-versions file)
-asdf global hcloud latest
+asdf global flyctl latest
 
-# Now hcloud commands are available
-hcloud version
+# Now flyctl commands are available
+flyctl version
 ```
 
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
@@ -50,7 +50,7 @@ install & manage versions.
 
 Contributions of any kind welcome! See the [contributing guide](contributing.md).
 
-[Thanks goes to these contributors](https://github.com/chessmango/asdf-hcloud/graphs/contributors)!
+[Thanks goes to these contributors](https://github.com/chessmango/asdf-flyctl/graphs/contributors)!
 
 # License
 

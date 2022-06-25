@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-GH_REPO="https://github.com/hetznercloud/cli"
-TOOL_NAME="hcloud"
-TOOL_TEST="hcloud version"
+GH_REPO="https://github.com/superfly/flyctl"
+TOOL_NAME="flyctl"
+TOOL_TEST="flyctl version"
 
 fail() {
   echo -e "asdf-$TOOL_NAME: $*"
@@ -13,7 +13,7 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if hcloud is not hosted on GitHub releases.
+# NOTE: You might want to remove this if flyctl is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
   curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
