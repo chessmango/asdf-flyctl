@@ -38,7 +38,7 @@ download_release() {
   version="$1"
   filename="$2"
 
-  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}-$(get_platform)-$(get_arch).$(get_ext)"
+  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}_${version}_$(get_platform)_$(get_arch).tar.gz"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -71,63 +71,21 @@ install_version() {
 
 get_platform() {
   local platform
-  platform=$(uname -s | tr '[:upper:]' '[:lower:]')
-  if [ "$platform" = "darwin" ]; then
-    echo "macos"
+  platform=$(uname -s)
+  if [ "$platform" = "Darwin" ]; then
+    echo "macOS"
   else
     echo "$platform"
   fi
 }
 
 get_arch() {
-  local arch
-  arch=$(uname -m)
-  case $arch in
-  "x86_64")
-    echo "amd64"
-    ;;
-  "arm")
-    echo "armv7" # Super best effort - TODO: find useful way to split armv6/armv7 maybe
-    ;;
-  "aarch64" | "arm64")
-    echo "arm64"
-    ;;
-  *)
-    exit 1
-    ;;
-  esac
-}
-
-get_ext() {
-  local platform
-  platform=$(uname -s | tr '[:upper:]' '[:lower:]')
-  case $platform in
-  "linux")
-    echo "tar.gz"
-    ;;
-  "darwin")
-    echo "zip"
-    ;;
-  *)
-    exit 1
-    ;;
-  esac
+  uname -m
 }
 
 extract() {
-  local file download_path ext
+  local file download_path
   file="$1"
   download_path="$2"
-  ext="$(get_ext)"
-  case $ext in
-  "tar.gz")
-    tar -xzf "$file" -C "$download_path"
-    ;;
-  "zip")
-    unzip "$file" -d "$download_path"
-    ;;
-  *)
-    exit 1
-    ;;
-  esac
+  tar -xzf "$file" -C "$download_path"
 }
