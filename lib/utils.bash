@@ -80,7 +80,14 @@ get_platform() {
 }
 
 get_arch() {
-  uname -m
+  local arch
+  arch=$(uname -m)
+
+  if [[ "$arch" == "aarch64" ]]; then
+    echo "arm64"
+  else
+    echo "$arch"
+  fi
 }
 
 extract() {
