@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/superfly/flyctl"
 TOOL_NAME="flyctl"
-TOOL_TEST="flyctl version"
+TOOL_TEST="fly version"
 
 fail() {
   echo -e "asdf-$TOOL_NAME: $*"
@@ -58,7 +58,7 @@ install_version() {
     tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 
     mkdir -p "$install_path"/bin
-    cp "$ASDF_DOWNLOAD_PATH"/"$tool_cmd" "$install_path"/bin
+    cp "$ASDF_DOWNLOAD_PATH"/"$TOOL_NAME" "$install_path"/bin/"$tool_cmd"
 
     test -x "$install_path/bin/$tool_cmd" || fail "Expected $install_path/bin/$tool_cmd to be executable."
 
